@@ -23,38 +23,31 @@ class CategoryItem extends StatefulWidget {
 class _CategoryItemState extends State<CategoryItem> {
   @override
   Widget build(BuildContext context) {
+    final bool isActive = widget.activeCategory == widget.index;
+
     return GestureDetector(
       onTap: () => widget.onClick(),
       child: Container(
         width: 130,
+        margin: const EdgeInsets.symmetric(horizontal: 5),
+        alignment: Alignment.center,
         decoration: BoxDecoration(
           border: Border.all(
-            color: widget.activeCategory == widget.index
-                ? AppColors.black
-                : AppColors.lighterBlack,
-            width: widget.activeCategory == widget.index ? 2 : 1,
+            color: isActive ? AppColors.black : AppColors.lighterBlack,
+            width: isActive ? 2 : 1,
           ),
           borderRadius: BorderRadius.circular(50),
         ),
-        alignment: Alignment.center,
-        margin: const EdgeInsets.only(
-          left: 5,
-          right: 5,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text(
-            widget.categoryName[0].toUpperCase().toString() +
-                widget.categoryName.substring(1).toString(),
-            style: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                color: widget.activeCategory == widget.index
-                    ? AppColors.black
-                    : AppColors.lighterBlack,
-                fontWeight: widget.activeCategory == widget.index
-                    ? FontWeight.w600
-                    : FontWeight.w500,
-              ),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12), // slightly better padding
+        child: Text(
+          // Capitalize first letter safely
+          widget.categoryName.isNotEmpty
+              ? '${widget.categoryName[0].toUpperCase()}${widget.categoryName.substring(1)}'
+              : '',
+          style: GoogleFonts.poppins(
+            textStyle: TextStyle(
+              color: isActive ? AppColors.black : AppColors.lighterBlack,
+              fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
             ),
           ),
         ),
