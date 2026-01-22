@@ -6,8 +6,6 @@ import 'package:flutter_news_new/models/news_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 
-// Edited by Thida for project branch
-
 class NewsInfo extends StatelessWidget {
   final News news;
 
@@ -16,6 +14,7 @@ class NewsInfo extends StatelessWidget {
     required this.news,
   });
 
+  // Edited by Thida - small safe change
   String cleanContent(String? content) {
     if (content == null || content.isEmpty) {
       return 'No detailed content available for this article.';
@@ -116,9 +115,10 @@ class NewsInfo extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  // Small text change to show this commit is by Thida
                   ElevatedButton.icon(
                     icon: const Icon(Icons.open_in_new),
-                    label: const Text('Read Full Article'),
+                    label: const Text('Read Full Article 🔹'),
                     onPressed: () async {
                       final uri = Uri.tryParse(news.url!);
                       if (uri != null && await canLaunchUrl(uri)) {
@@ -129,10 +129,10 @@ class NewsInfo extends StatelessWidget {
                       }
                     },
                   ),
-                  const SizedBox(height: 12), // spacing between buttons
+                  const SizedBox(height: 12),
                   OutlinedButton.icon(
                     icon: const Icon(Icons.share),
-                    label: const Text('Share Article'),
+                    label: const Text('Share Article 🔹'),
                     onPressed: () {
                       Share.share(
                         '${news.title}\n\nRead more:\n${news.url}',
