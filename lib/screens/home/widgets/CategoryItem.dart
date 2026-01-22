@@ -31,25 +31,37 @@ class _CategoryItemState extends State<CategoryItem> {
         width: 130,
         margin: const EdgeInsets.symmetric(horizontal: 5),
         alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         decoration: BoxDecoration(
+          color: isActive
+              ? AppColors.primary.withOpacity(0.1) // small highlight for active
+              : Colors.transparent,
           border: Border.all(
             color: isActive ? AppColors.black : AppColors.lighterBlack,
             width: isActive ? 2 : 1,
           ),
           borderRadius: BorderRadius.circular(50),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12), // slightly better padding
-        child: Text(
-          // Capitalize first letter safely
-          widget.categoryName.isNotEmpty
-              ? '${widget.categoryName[0].toUpperCase()}${widget.categoryName.substring(1)}'
-              : '',
-          style: GoogleFonts.poppins(
-            textStyle: TextStyle(
-              color: isActive ? AppColors.black : AppColors.lighterBlack,
-              fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              widget.categoryName.isNotEmpty
+                  ? '${widget.categoryName[0].toUpperCase()}${widget.categoryName.substring(1)}'
+                  : '',
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                  color: isActive ? AppColors.black : AppColors.lighterBlack,
+                  fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
+                ),
+              ),
             ),
-          ),
+            if (isActive) ...[
+              const SizedBox(width: 4),
+              // Tiny Thida mark for active category
+              const Icon(Icons.star, size: 14, color: Colors.orangeAccent),
+            ]
+          ],
         ),
       ),
     );
