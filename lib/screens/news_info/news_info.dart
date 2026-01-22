@@ -6,6 +6,8 @@ import 'package:flutter_news_new/models/news_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 
+// Edited by Thida for project branch
+
 class NewsInfo extends StatelessWidget {
   final News news;
 
