@@ -34,7 +34,7 @@ class _CategoryItemState extends State<CategoryItem> {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         decoration: BoxDecoration(
           color: isActive
-              ? AppColors.primary.withOpacity(0.1) // small highlight for active
+              ? AppColors.primary.withOpacity(0.1) // highlight active
               : Colors.transparent,
           border: Border.all(
             color: isActive ? AppColors.black : AppColors.lighterBlack,
@@ -58,8 +58,7 @@ class _CategoryItemState extends State<CategoryItem> {
             ),
             if (isActive) ...[
               const SizedBox(width: 4),
-              // Tiny Thida mark for active category
-              const Icon(Icons.star, size: 14, color: Colors.orangeAccent),
+              const Icon(Icons.star, size: 14, color: Colors.orangeAccent), // Thida marker
             ]
           ],
         ),

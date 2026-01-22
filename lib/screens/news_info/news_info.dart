@@ -14,12 +14,11 @@ class NewsInfo extends StatelessWidget {
     required this.news,
   });
 
-  // Edited by Thida - improved safe version
+  // Edited by Thida - final polished version
   String cleanContent(String? content) {
     if (content == null || content.isEmpty) {
       return 'No detailed content available for this article.';
     }
-    // Remove "[+xxx chars]" from content if exists
     return content.split('[+').first.trim();
   }
 
@@ -29,9 +28,7 @@ class NewsInfo extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'News Details',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w600,
-          ),
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
         ),
       ),
       body: SingleChildScrollView(
@@ -119,21 +116,17 @@ class NewsInfo extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Slightly changed button style and added Thida marker
                   ElevatedButton.icon(
                     icon: const Icon(Icons.open_in_new),
                     label: const Text('Read Full Article 🔹'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary, // using your app color
+                      backgroundColor: AppColors.primary,
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                     onPressed: () async {
                       final uri = Uri.tryParse(news.url!);
                       if (uri != null && await canLaunchUrl(uri)) {
-                        await launchUrl(
-                          uri,
-                          mode: LaunchMode.externalApplication,
-                        );
+                        await launchUrl(uri, mode: LaunchMode.externalApplication);
                       }
                     },
                   ),
@@ -146,9 +139,7 @@ class NewsInfo extends StatelessWidget {
                       side: const BorderSide(color: AppColors.primary),
                     ),
                     onPressed: () {
-                      Share.share(
-                        '${news.title}\n\nRead more:\n${news.url}',
-                      );
+                      Share.share('${news.title}\n\nRead more:\n${news.url}');
                     },
                   ),
                 ],
