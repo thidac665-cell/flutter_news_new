@@ -136,6 +136,7 @@ class _HomeState extends State<Home> {
             width: size.width,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
               itemCount: categories.length,
               itemBuilder: (context, index) => CategoryItem(
                 index: index,
@@ -160,6 +161,7 @@ class _HomeState extends State<Home> {
                 whenEmptyLoad: true,
                 textBuilder: DefaultLoadMoreTextBuilder.english, // optional
                 child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: articles.length,
                   itemBuilder: (context, index) {
                     return NewsCard(article: articles[index]);
