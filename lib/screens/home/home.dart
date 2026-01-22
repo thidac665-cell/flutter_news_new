@@ -167,7 +167,18 @@ class _HomeState extends State<Home> {
                 onLoadMore: _loadNews,
                 whenEmptyLoad: true,
                 textBuilder: DefaultLoadMoreTextBuilder.english,
-                child: ListView.builder(
+                child: articles.isEmpty
+                    ? const Center(
+                  child: Text(
+                    'No news found.\nPull to refresh.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
+                    ),
+                  ),
+                )
+                    : ListView.builder(
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: articles.length,
                   itemBuilder: (context, index) {
