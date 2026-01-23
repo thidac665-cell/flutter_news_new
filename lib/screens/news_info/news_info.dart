@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:flutter_news_new/common/colors.dart';
 import 'package:flutter_news_new/models/news_model.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_news_new/screens/news_info/webview_page.dart';
 import 'package:share_plus/share_plus.dart';
 
 class NewsInfo extends StatelessWidget {
@@ -123,11 +123,15 @@ class NewsInfo extends StatelessWidget {
                       backgroundColor: AppColors.primary,
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
-                    onPressed: () async {
-                      final uri = Uri.tryParse(news.url!);
-                      if (uri != null && await canLaunchUrl(uri)) {
-                        await launchUrl(uri, mode: LaunchMode.externalApplication);
-                      }
+                    onPressed: () {
+                      if (news.url == null || news.url!.isEmpty) return;
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => WebViewPage(url: news.url!),
+                        ),
+                      );
                     },
                   ),
                   const SizedBox(height: 12),

@@ -38,6 +38,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   http: ^1.0.0
   google_fonts: ^4.0.5
+  webview_flutter: ^4.4.2
   jiffy: ^6.1.0
   loadmore: ^2.1.0
   fluttertoast: ^8.2.2
