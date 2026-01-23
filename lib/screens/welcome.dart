@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../common/colors.dart'; // make sure you have this
-import '../common/common.dart'; // getInternetStatus() function
+import '../common/colors.dart';
+import '../common/common.dart';
 import '../common/widgets/no_connectivity.dart';
 import 'home/home.dart';
 
@@ -14,32 +13,44 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
+  Timer? _timer;
+
   @override
   void initState() {
     super.initState();
     checkConnectivity();
   }
 
-  Future<void> checkConnectivity() async {
-    if (await getInternetStatus()) {
-      if (!mounted) return;
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
-      Timer(const Duration(seconds: 2), () {
+  Future<void> checkConnectivity() async {
+    try {
+      if (await getInternetStatus()) {
         if (!mounted) return;
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const Home()),
-        );
-      });
-    } else {
-      if (!mounted) return;
-      Navigator.of(context, rootNavigator: true)
-          .push(
-        MaterialPageRoute(builder: (context) => const NoConnectivity()),
-      )
-          .then((_) {
+
+        _timer = Timer(const Duration(seconds: 2), () {
+          if (!mounted) return;
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const Home()),
+          );
+        });
+      } else {
         if (!mounted) return;
-        checkConnectivity();
-      });
+        Navigator.of(context, rootNavigator: true)
+            .push(
+          MaterialPageRoute(builder: (context) => const NoConnectivity()),
+        )
+            .then((_) {
+          if (!mounted) return;
+          checkConnectivity();
+        });
+      }
+    } catch (e) {
+      debugPrint("Connectivity error: $e");
     }
   }
 
@@ -62,12 +73,15 @@ class _WelcomeState extends State<Welcome> {
                   child: Image.asset(
                     'assets/images/logo.png',
                     fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.newspaper, size: 120);
+                    },
                   ),
                 ),
                 SizedBox(height: size.height * 0.45),
                 Text(
-                  'Copyright \u00a9 2023',
-                  style: GoogleFonts.poppins(color: AppColors.black),
+                  'Copyright © 2023',
+                  style: TextStyle(color: AppColors.black),
                 ),
               ],
             ),

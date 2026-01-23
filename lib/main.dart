@@ -5,7 +5,13 @@ import 'screens/welcome.dart';
 // Branch: Thida - small update for GitHub commit tracking
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: "assets/.env");
+
+  try {
+    await dotenv.load(fileName: "assets/.env");
+  } catch (e) {
+    debugPrint("Env load failed: $e");
+  }
+
   runApp(const MyApp());
 }
 
@@ -18,6 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'News App - Thida',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: null,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
