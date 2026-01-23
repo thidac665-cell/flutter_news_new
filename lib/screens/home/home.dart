@@ -100,7 +100,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery
+        .of(context)
+        .size;
 
     return Scaffold(
       appBar: AppBar(
@@ -136,13 +138,19 @@ class _HomeState extends State<Home> {
             width: size.width,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
               itemCount: categories.length,
-              itemBuilder: (context, index) => CategoryItem(
-                index: index,
-                categoryName: categories[index],
-                activeCategory: activeCategory,
-                onClick: () => _onCategoryChange(index),
-              ),
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: CategoryItem(
+                    index: index,
+                    categoryName: categories[index],
+                    activeCategory: activeCategory,
+                    onClick: () => _onCategoryChange(index),
+                  ),
+                );
+              },
             ),
           ),
 
@@ -158,8 +166,20 @@ class _HomeState extends State<Home> {
                 isFinish: isFinish,
                 onLoadMore: _loadNews,
                 whenEmptyLoad: true,
-                textBuilder: DefaultLoadMoreTextBuilder.english, // optional
-                child: ListView.builder(
+                textBuilder: DefaultLoadMoreTextBuilder.english,
+                child: articles.isEmpty
+                    ? const Center(
+                  child: Text(
+                    'No news found.\nPull to refresh.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
+                    ),
+                  ),
+                )
+                    : ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: articles.length,
                   itemBuilder: (context, index) {
                     return NewsCard(article: articles[index]);
