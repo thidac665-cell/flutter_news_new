@@ -40,20 +40,16 @@ class NewsInfo extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
-                news.urlToImage ?? 'https://via.placeholder.com/400x200',
+                news.urlToImage ?? '',
                 height: 220,
                 width: double.infinity,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
-                  return Container(
+                  return Image.asset(
+                    'assets/images/news_placeholder.png',
                     height: 220,
-                    color: Colors.grey.shade300,
-                    alignment: Alignment.center,
-                    child: const Icon(
-                      Icons.broken_image,
-                      size: 60,
-                      color: Colors.grey,
-                    ),
+                    width: double.infinity,
+                    fit: BoxFit.cover,
                   );
                 },
               ),
